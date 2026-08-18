@@ -8,12 +8,20 @@ WITHU — AI 기반 개인 맞춤 건강 미션과 그룹 동기부여를 결합
 | 무엇 | 주소 |
 |---|---|
 | **웹앱** | https://rise-client-rohdaeyoungs-projects.vercel.app |
-| 백엔드 API 문서 | https://rise-server-production.up.railway.app/swagger-ui.html |
+| 백엔드 API 문서 | https://1-201-117-9.nip.io/swagger-ui.html |
 | 백엔드 저장소 | https://github.com/rohdaeyoung/RISE-server |
 
 **테스트 계정: `test@withu.app` / `withu1234`** (그룹 코드 `TEAM33`, Day 7 상태)
 
 `main`에 push하면 Vercel이 자동으로 다시 배포합니다.
+
+> **2026-08-18: 백엔드가 Railway에서 해커톤 제공 서버(가비아 클라우드)로 옮겨졌습니다.**
+> 주소가 IP처럼 생긴 건 도메인을 사지 않고 HTTPS를 붙이려고 `nip.io`를 쓴 것입니다
+> (`1-201-117-9.nip.io` → `1.201.117.9`). 프론트가 https라 백엔드도 https여야 하는데,
+> 브라우저가 https 페이지에서 http 요청을 막기 때문입니다.
+>
+> `.env.local`을 예전 Railway 주소로 두고 있다면 위 "실제 백엔드에 붙여서 개발하기"의
+> 명령으로 다시 만들어 주세요. Railway는 만일을 대비해 **8/25까지만** 켜둡니다.
 
 ---
 
@@ -32,7 +40,7 @@ npm run dev
 
 ```bash
 cd frontend
-echo "VITE_API_BASE_URL=https://rise-server-production.up.railway.app" > .env.local
+echo "VITE_API_BASE_URL=https://1-201-117-9.nip.io" > .env.local
 npm run dev
 ```
 
