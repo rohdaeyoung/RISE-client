@@ -32,13 +32,18 @@ export function setSessionExpiredHandler(handler) {
   onSessionExpired = handler;
 }
 
-// 토큰 만료를 뜻하는 서버 응답인가.
+// 다시 로그인해야 하는 서버 응답인가.
 //
 // 상태 코드만 봐서는 안 된다. 로그인 실패(AUTH_002)도 401이라, 401을 전부 만료로 처리하면
 // 비밀번호를 한 번 틀렸을 때 "로그인이 만료됐어요"가 뜬다. 서버가 토큰 문제에만 붙이는
 // AUTH_003으로 좁힌다 (JwtAuthenticationEntryPoint).
+//
+// AUTH_004(사용자를 찾을 수 없음)도 함께 본다. 토큰은 7일짜리라 서명은 멀쩡한데 그 안의
+// userId가 가리키는 계정이 사라진 경우다. 이때 아무 처리도 하지 않으면 로그아웃도 안 되고
+// 미션·그룹이 전부 빈 화면이 되어, 사용자는 앱이 고장 난 것으로 본다. 실제로 하루 지나
+// 다시 들어갔을 때 이 상태가 나와서, 수동으로 로그아웃했다 로그인해야 미션이 보였다.
 function isSessionExpired(status, code) {
-  return status === 401 && code === 'AUTH_003';
+  return (status === 401 && code === 'AUTH_003') || (status === 404 && code === 'AUTH_004');
 }
 
 // 백엔드는 사진을 "/api/files/{id}" 같은 상대 경로로 내려준다. 프론트는 다른 주소(개발 시 5173,
