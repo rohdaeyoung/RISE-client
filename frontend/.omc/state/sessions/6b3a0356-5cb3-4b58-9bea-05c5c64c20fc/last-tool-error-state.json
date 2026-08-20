@@ -1,7 +1,0 @@
-{
-  "tool_name": "mcp__claude-in-chrome__find",
-  "tool_input_preview": "{\"query\":\"그룹 만들기 버튼\",\"tabId\":1386337172}",
-  "error": "The accessibility tree does not contain a \"그룹 만들기 버튼\" (Create Group button). The page shows elements related to a group that has already been created, including a heading \"그룹이 만들어졌어요\" (Group Created), a code sharing button with \"CKDR9M\", and a \"시작하기\" (Start) button. There is no button labeled as \"그룹 만들기\" (Create Group) in the current accessibility tree.",
-  "timestamp": "2026-08-07T16:42:04.378Z",
-  "retry_count": 1
-}

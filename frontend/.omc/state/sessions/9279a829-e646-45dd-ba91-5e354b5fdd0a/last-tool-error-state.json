@@ -1,7 +1,0 @@
-{
-  "tool_name": "PowerShell",
-  "tool_input_preview": "{\"command\":\"gh --version; gh auth status\",\"description\":\"Check GitHub CLI availability and auth in PowerShell\"}",
-  "error": "Exit code 1\ngh : The term 'gh' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spe\r\nlling of the name, or if a path was included, verify that the path is correct and try again.\r\nAt line:1 char:302\r\n+ ... y { $PSStyle.OutputRendering = 'PlainText' } catch {} } }; gh --versi ...\r\n+                                                                ~~\r\n    + CategoryInfo          : ObjectNotFound: (gh:String) [], CommandNotFoundException\r\n    + FullyQual...",
-  "timestamp": "2026-08-09T18:01:48.429Z",
-  "retry_count": 1
-}

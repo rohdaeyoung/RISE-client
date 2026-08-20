@@ -1,7 +1,0 @@
-{
-  "tool_name": "Bash",
-  "tool_input_preview": "{\"command\":\"claude mcp login manyfast\",\"description\":\"Authenticate with manyfast MCP server via OAuth\"}",
-  "error": "Exit code 1\nStarting authentication for \"manyfast\"…\nIf the browser didn't open, visit:\n  https://api.manyfast.io/authorize?response_type=code&client_id=ed9b4dd23d4c5d3ed4f123f2f352f9b7&code_challenge=Ztrtj7Tm_-hz9TnjqhysSf5YsS0g7d1L6E0GM0bRkRc&code_challenge_method=S256&redirect_uri=http%3A%2F%2Flocalhost%3A3118%2Fcallback&state=G3YCDbQfESQgJMjp2dsbcdyOXtRfx3nMiE_a91xFU7Y&scope=mcp%3Aread+mcp%3Awrite&resource=https%3A%2F%2Fapi.manyfast.io%2Fmcp\n\nWaiting for authorization… (^C to cancel)\nCouldn't...",
-  "timestamp": "2026-08-06T11:42:03.961Z",
-  "retry_count": 1
-}

@@ -1,7 +1,0 @@
-{
-  "tool_name": "mcp__claude-in-chrome__browser_batch",
-  "tool_input_preview": "{\"actions\":[{\"name\":\"computer\",\"input\":{\"action\":\"left_click\",\"tabId\":1386337722,\"coordinate\":[776,305]}},{\"name\":\"computer\",\"input\":{\"action\":\"screenshot\",\"tabId\":1386337722}}]}",
-  "error": "[computer:left_click] Clicked at (776, 305)\n\nactions[1] (computer:screenshot) failed: Error capturing screenshot: CDP sendCommand \"Page.captureScreenshot\" timed out after 30000ms on tab 1386337722. The renderer may be frozen or unresponsive. (1 completed, 0 remaining)",
-  "timestamp": "2026-08-08T09:25:46.607Z",
-  "retry_count": 1
-}

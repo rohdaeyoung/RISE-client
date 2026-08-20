@@ -1,7 +1,0 @@
-{
-  "tool_name": "mcp__claude-in-chrome__computer",
-  "tool_input_preview": "{\"action\":\"left_click\",\"tabId\":1386337820,\"ref\":\"ref_65\"}",
-  "error": "No element found with reference: \"ref_65\". The element may have been removed from the page.",
-  "timestamp": "2026-08-08T15:27:30.554Z",
-  "retry_count": 1
-}

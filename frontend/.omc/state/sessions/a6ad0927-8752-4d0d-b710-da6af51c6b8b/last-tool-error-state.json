@@ -1,7 +1,0 @@
-{
-  "tool_name": "Bash",
-  "tool_input_preview": "{\"command\":\"node -e \\\"\\nconst fs = require('fs');\\nconst path = '/c/Users/user/.claude/projects/c--Users-user-OneDrive-Desktop-vibecoding/daaef62e-25cd-4eff-a15e-031ad416d9d1.jsonl';\\nconst lines = fs...",
-  "error": "Exit code 1\nnode:fs:441\r\n    return binding.readFileUtf8(path, stringToFlags(options.flag));\r\n                   ^\r\n\r\nError: ENOENT: no such file or directory, open 'C:\\c\\Users\\user\\.claude\\projects\\c--Users-user-OneDrive-Desktop-vibecoding\\daaef62e-25cd-4eff-a15e-031ad416d9d1.jsonl'\r\n    at Object.readFileSync (node:fs:441:20)\r\n    at [eval]:4:18\r\n    at runScriptInThisContext (node:internal/vm:219:10)\r\n    at node:internal/process/execution:451:12\r\n    at [eval]-wrapper:6:24\r\n    at runScriptI...",
-  "timestamp": "2026-08-02T08:27:11.510Z",
-  "retry_count": 1
-}

@@ -30,3 +30,9 @@ build
 
 # Local Netlify folder
 .netlify
+
+# 개발 도구 로컬 상태 (세션 기록·캐시 — 저장소에 들어갈 내용이 아니다)
+.omc/
+**/.omc/
+.claude/settings.local.json
+**/.claude/settings.local.json

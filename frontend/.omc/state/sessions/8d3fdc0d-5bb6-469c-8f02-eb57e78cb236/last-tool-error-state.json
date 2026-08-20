@@ -1,7 +1,0 @@
-{
-  "tool_name": "mcp__claude-in-chrome__computer",
-  "tool_input_preview": "{\"action\":\"scroll\",\"tabId\":1386338404,\"coordinate\":[770,400],\"scroll_direction\":\"down\",\"scroll_amount\":3}",
-  "error": "The \"computer\" tool did not respond in time. The Chrome extension is connected but the page may be loading, unresponsive, or waiting on a permission prompt in the extension side panel. Try a lighter operation (e.g., \"get_page_text\" instead of a screenshot) or ask the user to check the page and any pending prompts.",
-  "timestamp": "2026-08-09T07:11:50.382Z",
-  "retry_count": 1
-}

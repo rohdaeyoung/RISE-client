@@ -1,7 +1,0 @@
-{
-  "tool_name": "Bash",
-  "tool_input_preview": "{\"command\":\"cd \\\"C:\\\\Users\\\\user\\\\withu-app\\\" && git pull origin main --allow-unrelated-histories --no-edit\",\"description\":\"Pull origin main into current branch, allowing unrelated histories\"}",
-  "error": "Exit code 1\nFrom https://github.com/rohdaeyoung/RISE-client\n * branch            main       -> FETCH_HEAD\nwarning: in the working copy of '.claude/settings.local.json', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of '.omc/state/agent-replay-42b74744-c093-458f-ab69-b34470b049df.jsonl', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of '.omc/state/idle-notif-cooldown.json', LF will be replaced by CRLF the next time Gi...",
-  "timestamp": "2026-08-10T03:41:27.298Z",
-  "retry_count": 1
-}
