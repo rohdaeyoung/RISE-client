@@ -26,7 +26,9 @@ function pickInternalFit() {
   return 'bad';
 }
 
-// input: (File, mealKey). output: { achieved: boolean, internalFit?: 'good'|'normal'|'bad' }
+// input: (File, mealKey). output: { achieved: boolean, recognized?: string, internalFit?: 'good'|'normal'|'bad' }
+// recognized는 AI가 사진에서 본 것("단백질 음료" 등). 백엔드 모드에서만 내려오고, 화면에 그대로 보여준다 —
+// internalFit과 달리 감추는 값이 아니다. 판정이 사진을 실제로 읽은 결과임을 사용자가 확인할 수 있어야 한다.
 export function analyzeMealPhoto(file, mealKey, { foodName, portion } = {}) {
   if (isBackendEnabled) {
     const form = new FormData();

@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Bot, Camera, CheckCircle2 } from 'lucide-react';
 import { MEAL_LABELS, resolveHomeRoute, useAppDispatch, useAppState, useAppSync } from '../context/AppContext';
 import { analyzeMealPhoto } from '../api/mealApi';
-import { resizeImageFile } from '../utils/resizeImage';
+import { resizeImageFile, toUploadFile } from '../utils/resizeImage';
 import CharacterAvatar from '../components/CharacterAvatar';
 
 export default function MealUploadPage() {
@@ -16,6 +16,8 @@ export default function MealUploadPage() {
   const [preview, setPreview] = useState(null);
   const [status, setStatus] = useState('idle'); // idle | loading | done
   const [achieved, setAchieved] = useState(null);
+  // AI가 사진에서 무엇을 봤는지(서버 recognized). 화면에 보여줘야 판정이 사진을 실제로 읽은 결과임이 드러난다.
+  const [recognized, setRecognized] = useState(null);
   const [error, setError] = useState('');
 
   const label = MEAL_LABELS[mealKey] || '식사';
@@ -34,10 +36,12 @@ export default function MealUploadPage() {
     setStatus('loading');
     setError('');
 
-    Promise.all([resizeImageFile(file), analyzeMealPhoto(file, mealKey)])
+    // 카메라 원본 그대로가 아니라 줄여서 올린다 (toUploadFile 주석 참고).
+    Promise.all([resizeImageFile(file), toUploadFile(file).then((upload) => analyzeMealPhoto(upload, mealKey))])
       .then(([thumbnail, result]) => {
         setPreview(thumbnail);
         setAchieved(result.achieved);
+        setRecognized(result.recognized ?? null);
         setStatus('done');
         // 사용자에게는 달성/미달성만 노출. result.internalFit은 다음 미션 생성용 내부 데이터라 화면에 쓰지 않음.
         dispatch({ type: 'LOG_MEAL', mealKey, achieved: result.achieved, photo: thumbnail });
@@ -46,6 +50,7 @@ export default function MealUploadPage() {
       })
       .catch((err) => {
         setStatus('idle');
+        setRecognized(null);
         setError(err?.message || '분석에 실패했어요. 잠시 후 다시 시도해주세요');
       });
   }
@@ -91,10 +96,14 @@ export default function MealUploadPage() {
               size="md"
             />
           </div>
-          <p className={`text-sm font-semibold mb-6 flex items-center justify-center gap-1.5 ${achieved ? 'text-brand-dark' : 'text-warn'}`}>
+          <p className={`text-sm font-semibold mb-2 flex items-center justify-center gap-1.5 ${achieved ? 'text-brand-dark' : 'text-warn'}`}>
             {achieved && <CheckCircle2 size={18} />}
             {achieved ? '오늘 식단 미션 달성!' : '조금 아쉬워요, 다음 끼니에 다시 도전해봐요'}
           </p>
+          {/* AI가 사진을 무엇으로 읽었는지. 미달성일 때 특히 중요하다 — 무엇을 다시 찍어야 할지 알 수 있다.
+              백엔드가 이 값을 안 내려주면(구버전) 아무것도 그리지 않는다. */}
+          {recognized && <p className="text-xs text-sub mb-6">AI가 사진에서 본 것: {recognized}</p>}
+          {!recognized && <div className="mb-6" />}
 
           <button
             onClick={() => navigate(resolveHomeRoute(state))}

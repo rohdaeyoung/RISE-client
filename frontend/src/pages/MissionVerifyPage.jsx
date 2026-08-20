@@ -4,7 +4,7 @@ import { Bot, Camera, CheckCircle2 } from 'lucide-react';
 import { resolveHomeRoute, useAppDispatch, useAppState, useAppSync } from '../context/AppContext';
 import { analyzeMissionPhoto, completeMission } from '../api/missionApi';
 import { isBackendEnabled } from '../api/client';
-import { resizeImageFile } from '../utils/resizeImage';
+import { resizeImageFile, toUploadFile } from '../utils/resizeImage';
 
 export default function MissionVerifyPage() {
   const { missionId } = useParams();
@@ -17,6 +17,8 @@ export default function MissionVerifyPage() {
 
   const [preview, setPreview] = useState(null);
   const [status, setStatus] = useState('idle'); // idle | loading | done
+  // AI가 인증 사진에서 무엇을 봤는지(서버 recognized).
+  const [recognized, setRecognized] = useState(null);
   const [error, setError] = useState('');
 
   function handleFile(e) {
@@ -28,11 +30,15 @@ export default function MissionVerifyPage() {
 
     // 백엔드 모드에서는 미션 완료/코인 지급을 서버가 처리한다 — 사진을 반드시 함께 보내야
     // 서버가 미션과 맞는지 AI로 판정한다. 맞지 않으면 MISSION_004로 거절된다.
-    const verify = isBackendEnabled ? completeMission(mission.id, file) : analyzeMissionPhoto(file);
+    // 카메라 원본 그대로가 아니라 줄여서 올린다 (toUploadFile 주석 참고).
+    const verify = toUploadFile(file).then((upload) =>
+      isBackendEnabled ? completeMission(mission.id, upload) : analyzeMissionPhoto(upload),
+    );
 
     Promise.all([resizeImageFile(file), verify])
-      .then(([thumbnail]) => {
+      .then(([thumbnail, result]) => {
         setPreview(thumbnail);
+        setRecognized(result?.recognized ?? null);
         setStatus('done');
         dispatch({ type: 'COMPLETE_MISSION', missionId: mission.id, photo: thumbnail });
         sync();
@@ -40,7 +46,9 @@ export default function MissionVerifyPage() {
       .catch((err) => {
         // 거절됐을 때 완료로 표시하면 안 된다 — 서버가 준 사유를 그대로 보여준다.
         setPreview(null);
+        setRecognized(null);
         setStatus('idle');
+        // 서버가 준 사유에는 AI가 사진을 무엇으로 봤는지가 함께 담겨 온다 (MISSION_004).
         setError(err?.message || '인증에 실패했어요. 잠시 후 다시 시도해주세요');
         // 같은 파일을 다시 고를 수 있도록 입력값을 비운다(안 비우면 onChange가 안 걸린다).
         e.target.value = '';
@@ -91,9 +99,12 @@ export default function MissionVerifyPage() {
 
       {status === 'done' && (
         <div className="bg-card rounded-2xl border border-gray-300 shadow-card p-5 text-center">
-          <p className="text-sm font-semibold text-brand-dark mb-6 flex items-center justify-center gap-1.5">
+          <p className="text-sm font-semibold text-brand-dark mb-2 flex items-center justify-center gap-1.5">
             <CheckCircle2 size={18} /> 미션 인증 완료!
           </p>
+          {/* AI가 사진을 무엇으로 읽었는지. 백엔드가 안 내려주면(구버전) 아무것도 그리지 않는다. */}
+          {recognized && <p className="text-xs text-sub mb-6">AI가 사진에서 본 것: {recognized}</p>}
+          {!recognized && <div className="mb-6" />}
           <button
             onClick={() => navigate(resolveHomeRoute(state))}
             className="w-full bg-brand text-white rounded-full py-3.5 text-sm font-semibold"
